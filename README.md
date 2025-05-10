@@ -15,27 +15,16 @@ Este projeto é um exemplo de microserviço RESTful construído com **FastAPI**,
 
 ---
 
-## Como Executar o Projeto
+## Pré-requisitos
 
-### 1. Clonar o repositório
+- Docker 20.10+
 
-```bash
-git clone https://github.com/alexandredlima81/FastAPI-CRUD-Microservice.git
-cd FastAPI-CRUD-Microservice
-```
-### 2. Subir com Docker Compose
-```bash
-docker-compose up --build
-```
-### 3. Acessar a API
-Swagger: http://localhost:8000/docs
+- Docker Compose 1.29+
 
-ReDoc: http://localhost:8000/redoc
+- Python 3.11 (opcional para desenvolvimento local)
 
-## Executando Testes Automatizados
-```bash
-docker run --rm -v $PWD:/app -w /app python:3.11 bash -c "pip install -r requirements.txt && pytest"
-```
+---
+
 ## Estrutura do Projeto
 ```bash
 
@@ -52,24 +41,174 @@ FastAPI-CRUD-Microservice/
 ├── docker-compose.yml   # Orquestração com PostgreSQL
 └── README.md            # Este arquivo
 ```
-## Endpoints
+---
 
-GET /items — Lista todos os itens
+## Como Executar o Projeto
 
-GET /items/{id} — Retorna um item específico
+### 1. Com Docker (recomendado)
 
-POST /items — Cria um novo item
+```bash
+# Clonar repositório
+git clone https://github.com/alexandredlima81/FastAPI-CRUD-Microservice.git
+cd FastAPI-CRUD-Microservice
+```
+```bash
+# Iniciar containers
+docker-compose up --build
+```
+- Acessar a API:
 
-PUT /items/{id} — Atualiza um item existente
+Swagger: http://localhost:8000/docs
 
-DELETE /items/{id} — Deleta um item existente
+ReDoc: http://localhost:8000/redoc
 
-## Observações
-Os dados são persistidos em um banco PostgreSQL.
+```bash
+# Finalizar containers
+docker-compose down -v
+```
 
-Recomendado para projetos que buscam escalabilidade com APIs modernas.
+### 2. Sem Docker (desenvolvimento)
 
-Fácil integração com sistemas de autenticação, mensageria, cache, etc.
+python -m venv venv
+source venv/bin/activate  # Linux/MacOS
+venv\Scripts\activate     # Windows
+
+pip install -r requirements.txt
+uvicorn app.main:app --reload
+
+## 3. Executando Testes Automatizados
+```bash
+docker run --rm -v $PWD:/app -w /app python:3.11 bash -c "pip install -r requirements.txt && pytest"
+```
+
+## Testes Automatizados
+Para executar os testes:
+
+```bash
+# Com Docker
+docker-compose exec web pytest
+
+# Localmente (com venv ativado)
+pytest
+```
+---
+## Endpoints da API
+
+Método	Endpoint	Descrição	Schema de Entrada	Status Code de Sucesso	Schema de Resposta
+POST	/items/	Cria um novo item	ItemCreate	201 (Created)	Item
+GET	/items/	Lista todos os itens (paginação)	-	200 (OK)	List[Item]
+GET	/items/{id}	Obtém um item específico	-	200 (OK)	Item
+PUT	/items/{id}	Atualiza um item existente	ItemUpdate	200 (OK)	Item
+DELETE	/items/{id}	Remove um item	-	200 (OK)	DeleteResponse
+---
+## Detalhes dos Schemas:
+
+### ItemCreate:
+
+```json
+{
+  "title": "string",
+  "description": "string (opcional)"
+}
+```
+### ItemUpdate:
+
+```json
+{
+  "title": "string (opcional)",
+  "description": "string (opcional)"
+}
+```
+### Item (Resposta):
+
+```json
+{
+  "id": "integer",
+  "title": "string",
+  "description": "string (opcional)"
+}
+```
+### DeleteResponse:
+
+```json
+{
+  "status": "string",
+  "message": "string",
+  "id": "integer"
+}
+```
+---
+## Parâmetros de Query (GET /items/):
+
+- skip: Número de itens para pular (default: 0)
+
+- limit: Limite de itens por página (default: 100)
+---
+## Exemplo de requisição:
+
+```bash
+GET /items/?skip=0&limit=10
+```
+## Códigos de Erro Comuns:
+- 400 Bad Request: Validação falhou
+
+- 404 Not Found: Item não encontrado
+
+- 500 Internal Server Error: Erro no servidor
+---
+## Os teste de todos os endpoints, podem ser realizados diretamente na documentação interativa:
+
+- Swagger UI
+
+- ReDoc
+---
+## Documentação da API
+
+A API oferece dois formatos de documentação interativa:
+
+Swagger UI: http://localhost:8000/docs
+
+ReDoc: http://localhost:8000/redoc
+---
+
+
+## Persistência de Dados
+PostgreSQL 13 como banco de dados principal
+
+SQLAlchemy 2.0 como ORM
+
+Dados persistidos em volume Docker (postgres_data)
+## Recursos Avançados
+Validação de dados com Pydantic v2
+
+Tratamento de erros global
+
+Paginação automática
+
+Documentação OpenAPI automática
+
+Health Check endpoint (/db-health)
+## Variáveis de Ambiente
+O projeto utiliza as seguintes variáveis (configuradas no docker-compose.yml):
+
+DATABASE_URL: URL de conexão com o PostgreSQL
+
+POSTGRES_USER: Usuário do banco de dados
+
+POSTGRES_PASSWORD: Senha do banco de dados
+
+POSTGRES_DB: Nome do banco de dados
 
 ## Licença
 Este projeto está licenciado sob os termos da licença MIT.
+
+## Recursos Futuros
+Autenticação JWT
+
+Sistema de cache com Redis
+
+Monitoramento com Prometheus
+
+Logs estruturados
+
+Migrações de banco com Alembic
