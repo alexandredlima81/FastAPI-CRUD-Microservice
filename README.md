@@ -41,6 +41,7 @@ FastAPI-CRUD-Microservice/
 ├── docker-compose.yml   # Orquestração com PostgreSQL
 └── README.md            # Este arquivo
 ```
+
 ---
 
 ## Como Executar o Projeto
@@ -77,21 +78,26 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload
 
 ## 3. Executando Testes Automatizados
-```bash
-docker run --rm -v $PWD:/app -w /app python:3.11 bash -c "pip install -r requirements.txt && pytest"
-```
 
-## Testes Automatizados
 Para executar os testes:
 
 ```bash
 # Com Docker
 docker-compose exec web pytest
-
+```
+```bash
 # Localmente (com venv ativado)
 pytest
 ```
+
+## 34. Os teste de todos os endpoints, podem ser realizados diretamente na documentação interativa:
+
+Swagger: http://localhost:8000/docs
+
+ReDoc: http://localhost:8000/redoc
+
 ---
+
 ## Endpoints da API
 
 Método	Endpoint	Descrição	Schema de Entrada	Status Code de Sucesso	Schema de Resposta
@@ -100,7 +106,9 @@ GET	/items/	Lista todos os itens (paginação)	-	200 (OK)	List[Item]
 GET	/items/{id}	Obtém um item específico	-	200 (OK)	Item
 PUT	/items/{id}	Atualiza um item existente	ItemUpdate	200 (OK)	Item
 DELETE	/items/{id}	Remove um item	-	200 (OK)	DeleteResponse
+
 ---
+
 ## Detalhes dos Schemas:
 
 ### ItemCreate:
@@ -138,6 +146,7 @@ DELETE	/items/{id}	Remove um item	-	200 (OK)	DeleteResponse
 }
 ```
 ---
+
 ## Parâmetros de Query (GET /items/):
 
 - skip: Número de itens para pular (default: 0)
@@ -149,19 +158,16 @@ DELETE	/items/{id}	Remove um item	-	200 (OK)	DeleteResponse
 ```bash
 GET /items/?skip=0&limit=10
 ```
+---
 ## Códigos de Erro Comuns:
 - 400 Bad Request: Validação falhou
 
 - 404 Not Found: Item não encontrado
 
 - 500 Internal Server Error: Erro no servidor
----
-## Os teste de todos os endpoints, podem ser realizados diretamente na documentação interativa:
 
-- Swagger UI
-
-- ReDoc
 ---
+
 ## Documentação da API
 
 A API oferece dois formatos de documentação interativa:
@@ -169,8 +175,8 @@ A API oferece dois formatos de documentação interativa:
 Swagger UI: http://localhost:8000/docs
 
 ReDoc: http://localhost:8000/redoc
----
 
+---
 
 ## Persistência de Dados
 PostgreSQL 13 como banco de dados principal
