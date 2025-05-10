@@ -100,12 +100,13 @@ ReDoc: http://localhost:8000/redoc
 
 ## Endpoints da API
 
-Método	Endpoint	Descrição	Schema de Entrada	Status Code de Sucesso	Schema de Resposta
-POST	/items/	Cria um novo item	ItemCreate	201 (Created)	Item
-GET	/items/	Lista todos os itens (paginação)	-	200 (OK)	List[Item]
-GET	/items/{id}	Obtém um item específico	-	200 (OK)	Item
-PUT	/items/{id}	Atualiza um item existente	ItemUpdate	200 (OK)	Item
-DELETE	/items/{id}	Remove um item	-	200 (OK)	DeleteResponse
+|Método	| Endpoint	    | Descrição                         | Schema de Entrada	| Status Code de Sucesso | Schema de Resposta
+| ----- | ------------- | --------------------------------- | ----------------- | ---------------------- | ------------------- |
+|POST	| /items/   	| Cria um novo item	ItemCreate	    | ItemCreate        | 201 (Created)	         | Item
+|GET	| /items/	    | Lista todos os itens (paginação)	|                   | 200 (OK)	             | List[Item]
+|GET	| /items/{id}	| Obtém um item específico	    	|                   | 200 (OK)	Item
+|PUT	| /items/{id}	| Atualiza um item existente	    | ItemUpdate    	| 200 (OK)	Item
+|DELETE	| /items/{id}	| Remove um item	                | -	                | 200 (OK)	DeleteResponse
 
 ---
 
