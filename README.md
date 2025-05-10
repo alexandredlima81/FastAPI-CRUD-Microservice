@@ -1,6 +1,6 @@
-# FastAPI CRUD Microservice
+# FastAPI CRUD Microservice com PostgreSQL e Docker
 
-Este projeto é um exemplo de microserviço RESTful construído com **FastAPI**, implementando um CRUD completo (Create, Read, Update, Delete) com armazenamento em memória.
+Este projeto é um exemplo de microserviço RESTful construído com **FastAPI**, implementando um CRUD completo (Create, Read, Update, Delete) com persistência de dados em **PostgreSQL**, empacotado com **Docker**.
 
 ---
 
@@ -8,66 +8,68 @@ Este projeto é um exemplo de microserviço RESTful construído com **FastAPI**,
 
 - [FastAPI](https://fastapi.tiangolo.com/)
 - [Uvicorn](https://www.uvicorn.org/)
-- Python 3.8+
+- [PostgreSQL](https://www.postgresql.org/)
+- [SQLAlchemy](https://www.sqlalchemy.org/)
+- [Docker](https://www.docker.com/)
+- [Pytest](https://docs.pytest.org/)
 
 ---
 
-## Como Executar
+## Como Executar o Projeto
 
 ### 1. Clonar o repositório
 
 ```bash
-git clone https://github.com/seuusuario/fastapi-crud.git
-cd fastapi-crud
+git clone https://github.com/seuusuario/FastAPI-CRUD-Microservice.git
+cd FastAPI-CRUD-Microservice
 ```
-### 2. Criar um ambiente virtual (opcional, mas recomendado)
-
-``` bash
-python -m venv venv
-source venv/bin/activate  # Linux/macOS
-venv\Scripts\activate     # Windows
-```
-### 3. Instalar as dependências
-
+### 2. Subir com Docker Compose
 ```bash
-pip install fastapi uvicorn
+docker-compose up --build
 ```
-### 4. Rodar a aplicação
+### 3. Acessar a API
+Swagger: http://localhost:8000/docs
 
+ReDoc: http://localhost:8000/redoc
+
+🧪 Executando Testes Automatizados
 ```bash
-uvicorn main:app --reload
+docker run --rm -v $PWD:/app -w /app python:3.11 bash -c "pip install -r requirements.txt && pytest"
 ```
-### 5. Acessar a API
-
-Documentação interativa (Swagger): http://localhost:8000/docs
-
-Documentação alternativa (ReDoc): http://localhost:8000/redoc
-
-## Estrutura do Projeto
-
+📁 Estrutura do Projeto
 ```bash
-fastapi-crud/
-├── main.py         # Aplicação FastAPI com as rotas CRUD
-├── models.py       # Modelo de dados Pydantic
-└── README.md       # Documentação do projeto
+
+FastAPI-CRUD-Microservice/
+├── app/
+│   ├── __init__.py
+│   ├── main.py          # Ponto de entrada da aplicação FastAPI
+│   ├── models.py        # Modelos SQLAlchemy
+│   ├── schemas.py       # Schemas Pydantic
+│   └── crud.py          # Operações CRUD
+├── test_main.py         # Testes automatizados com pytest
+├── requirements.txt     # Dependências do projeto
+├── Dockerfile           # Dockerfile da aplicação FastAPI
+├── docker-compose.yml   # Orquestração com PostgreSQL
+└── README.md            # Este arquivo
 ```
-## Funcionalidades
+## Endpoints
 
-GET /items - Lista todos os itens
+GET /items — Lista todos os itens
 
-GET /items/{id} - Obtém item específico
+GET /items/{id} — Retorna um item específico
 
-POST /items - Cria um novo item
+POST /items — Cria um novo item
 
-PUT /items/{id} - Atualiza item existente
+PUT /items/{id} — Atualiza um item existente
 
-DELETE /items/{id} - Remove item
+DELETE /items/{id} — Deleta um item existente
 
 ## Observações
+Os dados são persistidos em um banco PostgreSQL.
 
-Os dados são armazenados em memória, ou seja, são perdidos quando o servidor é reiniciado.
+Recomendado para projetos que buscam escalabilidade com APIs modernas.
 
-Para persistência real, pode-se integrar com um banco como SQLite, PostgreSQL etc.
+Fácil integração com sistemas de autenticação, mensageria, cache, etc.
 
 ## Licença
-Este projeto está sob a licença MIT
+Este projeto está licenciado sob os termos da licença MIT.
