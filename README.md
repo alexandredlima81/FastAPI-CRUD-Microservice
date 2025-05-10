@@ -32,11 +32,11 @@ Swagger: http://localhost:8000/docs
 
 ReDoc: http://localhost:8000/redoc
 
-🧪 Executando Testes Automatizados
+## Executando Testes Automatizados
 ```bash
 docker run --rm -v $PWD:/app -w /app python:3.11 bash -c "pip install -r requirements.txt && pytest"
 ```
-📁 Estrutura do Projeto
+## Estrutura do Projeto
 ```bash
 
 FastAPI-CRUD-Microservice/
