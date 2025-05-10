@@ -20,7 +20,7 @@ Este projeto é um exemplo de microserviço RESTful construído com **FastAPI**,
 ### 1. Clonar o repositório
 
 ```bash
-git clone https://github.com/seuusuario/FastAPI-CRUD-Microservice.git
+git clone https://github.com/alexandredlima81/FastAPI-CRUD-Microservice.git
 cd FastAPI-CRUD-Microservice
 ```
 ### 2. Subir com Docker Compose
