@@ -1,10 +1,10 @@
-# 📦 FastAPI CRUD Microservice
+# FastAPI CRUD Microservice
 
 Este projeto é um exemplo de microserviço RESTful construído com **FastAPI**, implementando um CRUD completo (Create, Read, Update, Delete) com armazenamento em memória.
 
 ---
 
-## 🚀 Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 - [FastAPI](https://fastapi.tiangolo.com/)
 - [Uvicorn](https://www.uvicorn.org/)
@@ -12,7 +12,7 @@ Este projeto é um exemplo de microserviço RESTful construído com **FastAPI**,
 
 ---
 
-## 🛠️ Como Executar
+## Como Executar
 
 ### 1. Clonar o repositório
 
